@@ -30,6 +30,11 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+app.options('*', cors());
+app.options('/products/:id', cors()) // enable pre-flight request for DELETE request
+app.delete('/products/:id', cors(), function (req, res, next) {
+   res.json({msg: 'This is CORS-enabled for all origins!'})
+});
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
@@ -64,7 +69,7 @@ mongoose
   )
   .then(() => {
     app.listen(PORT, '0.0.0.0', () =>{
-      console.log(`Server Port: ${PORT}`)
+      console.log(`Server Port: ${PORT}`);
 
       /* ADD DATA ONE TIME ONLY!!! */
     // User.insertMany(users);
