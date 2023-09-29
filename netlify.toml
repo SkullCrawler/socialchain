@@ -1,2 +1,32 @@
 [build]
-  googleAUTH = { API_KEY = "abcdefghi" }
+  publish = "client/build"  # Adjust this path based on your project's client build output
+  command = "cd client && yarn run build && cd ../server && yarn run build"  # Build both client and server
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    target = "server"  # Set the target to "server" for server-side rendering (if applicable)
+
+[[plugins]]
+  package = "netlify-plugin-contextual-env"
+  [plugins.inputs]
+    default = "development"
+
+[[plugins]]
+  package = "netlify-plugin-headers"
+  [plugins.inputs]
+    headers = [
+      # Redirect all requests to the client app (React frontend)
+      {"for": "/*", "headers": {"/*": "Cache-Control: public, max-age=0, must-revalidate"}},
+      {"for": "/api/*", "headers": {"/*": "Cache-Control: public, max-age=3600"}}
+    ]
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"  # Adjust the path as needed
+  status = 200
+
+[[redirects]]
+  from = "/api/*"  # Define API routes
+  to = "http://localhost:3001/:splat"  # Replace with the appropriate server address
+  status = 200
