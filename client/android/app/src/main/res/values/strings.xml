@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SocialChain</string>
+    <string name="title_activity_main">SocialChain</string>
+    <string name="package_name">com.sc.com</string>
+    <string name="custom_url_scheme">com.sc.com</string>
+</resources>
