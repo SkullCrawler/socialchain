@@ -1,0 +1,8 @@
+{
+  "appId": "com.skullcrawler.socialchain",
+  "appName": "SocialChain",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  }
+}
